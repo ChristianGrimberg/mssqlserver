@@ -7,6 +7,8 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=YourStrongPassword
       - MSSQL_PID=Express
+    volumes:
+      - /var/lib/docker/volumes/dbdata/_data:/var/opt/mssql
     ports:
       - "0.0.0.0:1433:1433"
     command: ["/opt/mssql/bin/sqlservr"]
