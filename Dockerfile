@@ -27,7 +27,7 @@ RUN ACCEPT_EULA=Y apt-get install -y mssql-tools
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 RUN /bin/bash -c "source ~/.bashrc"
 
-# install necessary localesd
+# Install necessary locales
 RUN apt-get install -y locales \
     && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
     && locale-gen
@@ -38,7 +38,12 @@ RUN apt-get install mssql-server -f -y
 # Delete update cached files
 RUN rm -rf /var/lib/apt/lists/*
 
-# Default SQL Server TCP/Port.
+# Buenos Aires Time Zone
+ENV TZ=America/Buenos_Aires
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone
+
+# Default SQL Server TCP/Port
 EXPOSE 1433
 
 # Run SQL Server process.

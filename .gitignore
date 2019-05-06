@@ -3,6 +3,7 @@
 # ==============
 *.ldf
 *.mdf
+*.bak
 
 # ================
 # OSX System Files

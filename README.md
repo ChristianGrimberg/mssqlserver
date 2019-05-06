@@ -13,3 +13,4 @@ You can see the SQL Server instalation info running this command:
 ```bash
 docker exec docker_testdb_1 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'YourStrongPassword' -Q 'SELECT @@VERSION'
 ```
+> This container has configured with Buenos Aires time zone.
