@@ -1,0 +1,25 @@
+# ==============
+# Database Files
+# ==============
+*.ldf
+*.mdf
+
+# ================
+# OSX System Files
+# ================
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ====================
+# Windows System Files
+# ====================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# =========
+# Dive logs
+# =========
+dive.log

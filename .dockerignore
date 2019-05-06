@@ -1,0 +1,4 @@
+# Ignore files building the images
+docker-compose.yml
+.gitignore
+LICENSE
