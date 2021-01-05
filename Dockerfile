@@ -1,10 +1,10 @@
-# SQL Server 2017 for Ubuntu 16.04
+# Ubuntu 18.04 Image
 FROM ubuntu:18.04
 
 # Label of the container
-LABEL maintainer="Microsoft SQL Server with tools for Linux"
+LABEL maintainer="Microsoft SQL Server with Tools for Linux"
 
-# Set the envirorments
+# Set the image environments
 ENV TZ=America/Buenos_Aires
 ENV DEBIAN_FRONTEND noninteractive
 ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
@@ -17,7 +17,7 @@ RUN apt-get update \
 # Import the public repository GPG keys
 RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 
-# Register the Microsoft SQL Server with Tools for Ubuntu repository
+# Register the Microsoft SQL Server 2019 with Tools for Ubuntu repository
 RUN add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/18.04/mssql-server-2019.list)"
 RUN curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list | tee /etc/apt/sources.list.d/msprod.list
 
