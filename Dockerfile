@@ -12,21 +12,21 @@ ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
 # Install system utilities
 RUN apt-get update \
     && apt-get install -y \
-    curl wget apt-utils apt-transport-https debconf-utils vim screenfetch gnupg gnupg2 gnupg1 software-properties-common
+    curl wget apt-utils apt-transport-https software-properties-common debconf-utils gnupg gnupg2 gnupg1
 
 # Import the public repository GPG keys
 RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 
 # Register the Microsoft SQL Server 2019 with Tools for Ubuntu repository
 RUN add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/18.04/mssql-server-2019.list)"
-RUN curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list | tee /etc/apt/sources.list.d/msprod.list
+RUN curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list | tee /etc/apt/sources.list.d/prod1804.list
 
-# Install SQL Server drivers
+# Install SQL Server Tools and drivers
 RUN apt-get update \
-    && ACCEPT_EULA=Y apt-get install -y unixodbc-dev
+    && ACCEPT_EULA=Y apt-get install -y mssql-tools unixodbc-dev
 
-# Install SQL Server Tools
-RUN ACCEPT_EULA=Y apt-get install -y mssql-tools
+#  Add SQL Server Tools to your PATH environment variable
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 RUN /bin/bash -c "source ~/.bashrc"
 
