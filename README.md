@@ -1,5 +1,7 @@
 # Microsoft SQL Server with tools
 
+![Build & Publish Container Image](https://github.com/ChristianGrimberg/mssqlserver/workflows/Build%20&%20Publish%20Container%20Image/badge.svg?branch=main)
+
 Image of Microsoft SQL Server with tools with latest updates from Microsoft repository. This popular database engine, runs under Linux Ubuntu release 18.04 LTS.
 
 ## Build the Docker container locally
