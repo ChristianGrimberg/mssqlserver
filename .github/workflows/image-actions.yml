@@ -9,60 +9,52 @@ on:
   workflow_dispatch:
 
 jobs:
-  github-packages:
+  build-image:
     runs-on: ubuntu-latest
+    env:
+      SA_PASSWORD: ${{ secrets.SA_PASSWORD }}
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build local image and Tag
+      run: |
+        docker build -t csgrimberg/mssqlserver:latest .
+        docker tag csgrimberg/mssqlserver:latest docker.pkg.github.com/christiangrimberg/mssqlserver/mssqlserver
+
+    - name: Run the Container and test connection to Database Engine
+      run: |
+        docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=$SA_PASSWORD' -e 'MSSQL_PID=Developer' -p 0.0.0.0:1433:1433 --name mssqlserver -d csgrimberg/mssqlserver:latest
+        sleep 5s
+        docker exec mssqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P '$SA_PASSWORD' -Q 'SELECT @@VERSION'
+     
+  github-packages:
+    needs: build-image
+    runs-on: build-image
+    env:
+      GH_REGISTRY_USER: ${{ secrets.GH_REGISTRY_USER }}
+      GH_REGISTRY_PASSWORD: ${{ secrets.GH_REGISTRY_PASSWORD }}
 
     steps:
-      - uses: actions/checkout@v2
-
       - name: Connect to GitHub Packages with GitHub Secrets
-        env:
-          GH_REGISTRY_USER: ${{ secrets.GH_REGISTRY_USER }}
-          GH_REGISTRY_PASSWORD: ${{ secrets.GH_REGISTRY_PASSWORD }}
         run: |
           docker login https://docker.pkg.github.com -u $GH_REGISTRY_USER -p $GH_REGISTRY_PASSWORD
-
-      - name: Build local image and Tag
-        run: |
-          docker build -t csgrimberg/mssqlserver:latest .
-          docker tag csgrimberg/mssqlserver:latest docker.pkg.github.com/christiangrimberg/mssqlserver/mssqlserver
-
-      - name: Run the Container and test connection to Database Engine
-        env:
-          SA_PASSWORD: ${{ secrets.SA_PASSWORD }}
-        run: |
-          docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=$SA_PASSWORD' -e 'MSSQL_PID=Developer' -p 0.0.0.0:1433:1433 --name mssqlserver -d csgrimberg/mssqlserver:latest
-          sleep 5s
-          docker exec mssqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P '$SA_PASSWORD' -Q 'SELECT @@VERSION'
 
       - name: Push the local image to GitHub Packages
         run: |
           docker push docker.pkg.github.com/christiangrimberg/mssqlserver/mssqlserver:latest
 
   dockerhub:
-    runs-on: ubuntu-latest
+    needs: build-image
+    runs-on: build-image
+    env:
+      DOCKER_USER: ${{ secrets.DOCKER_USER }}   
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
 
     steps:
-      - uses: actions/checkout@v2
-
       - name: Connect to DockerHub with GitHub Secrets
-        env:
-          DOCKER_USER: ${{ secrets.DOCKER_USER }}   
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-
-      - name: Build local image
-        run: |
-          docker build -t csgrimberg/mssqlserver:latest .
-
-      - name: Run the Container and test connection to Database Engine
-        env:
-          SA_PASSWORD: ${{ secrets.SA_PASSWORD }}
-        run: |
-          docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=$SA_PASSWORD' -e 'MSSQL_PID=Developer' -p 0.0.0.0:1433:1433 --name mssqlserver -d csgrimberg/mssqlserver:latest
-          sleep 5s
-          docker exec mssqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P '$SA_PASSWORD' -Q 'SELECT @@VERSION'
 
       - name: Push the local image to DockerHub
         run: |
