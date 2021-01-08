@@ -17,7 +17,7 @@ docker pull csgrimberg/mssqlserver:latest
 You can pull this image from my [GitHub Packages](https://github.com/ChristianGrimberg?tab=packages) with this command:
 
 ```bash
-docker pull docker.pkg.github.com/christiangrimberg/msssqlserver/mssqlserver:latest
+docker pull docker.pkg.github.com/christiangrimberg/mssqlserver/mssqlserver:latest
 ```
 
 ## Build the Docker container locally
