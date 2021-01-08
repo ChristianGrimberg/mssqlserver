@@ -27,7 +27,7 @@ jobs:
           docker build -t csgrimberg/mssqlserver:latest .
           docker tag csgrimberg/mssqlserver:latest docker.pkg.github.com/christiangrimberg/mssqlserver/mssqlserver
 
-      -name: Run the Container and test connection to Database Engine
+      - name: Run the Container and test connection to Database Engine
         env:
           SA_PASSWORD: ${{ secrets.SA_PASSWORD }}
         run: |
@@ -56,7 +56,7 @@ jobs:
         run: |
           docker build -t csgrimberg/mssqlserver:latest .
 
-      -name: Run the Container and test connection to Database Engine
+      - name: Run the Container and test connection to Database Engine
         env:
           SA_PASSWORD: ${{ secrets.SA_PASSWORD }}
         run: |
