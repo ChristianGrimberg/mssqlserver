@@ -9,10 +9,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-image:
+  build-image-and-push:
     runs-on: ubuntu-latest
     env:
       SA_PASSWORD: ${{ secrets.SA_PASSWORD }}
+      GH_REGISTRY_USER: ${{ secrets.GH_REGISTRY_USER }}
+      GH_REGISTRY_PASSWORD: ${{ secrets.GH_REGISTRY_PASSWORD }}
+      DOCKER_USER: ${{ secrets.DOCKER_USER }}   
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
     
     steps:
     - uses: actions/checkout@v2
@@ -31,35 +35,19 @@ jobs:
     - name: Test connection to Database Engine
       run: |
         docker exec mssqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P '$SA_PASSWORD' -Q 'SELECT @@VERSION'
-     
-  github-packages:
-    needs: build-image
-    runs-on: build-image
-    env:
-      GH_REGISTRY_USER: ${{ secrets.GH_REGISTRY_USER }}
-      GH_REGISTRY_PASSWORD: ${{ secrets.GH_REGISTRY_PASSWORD }}
+      
+    - name: Connect to GitHub Packages with GitHub Secrets
+      run: |
+        docker login https://docker.pkg.github.com -u $GH_REGISTRY_USER -p $GH_REGISTRY_PASSWORD
 
-    steps:
-      - name: Connect to GitHub Packages with GitHub Secrets
-        run: |
-          docker login https://docker.pkg.github.com -u $GH_REGISTRY_USER -p $GH_REGISTRY_PASSWORD
+    - name: Push the local image to GitHub Packages
+      run: |
+        docker push docker.pkg.github.com/christiangrimberg/mssqlserver/mssqlserver:latest
 
-      - name: Push the local image to GitHub Packages
-        run: |
-          docker push docker.pkg.github.com/christiangrimberg/mssqlserver/mssqlserver:latest
+    - name: Connect to DockerHub with GitHub Secrets
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
-  dockerhub:
-    needs: build-image
-    runs-on: build-image
-    env:
-      DOCKER_USER: ${{ secrets.DOCKER_USER }}   
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
-
-    steps:
-      - name: Connect to DockerHub with GitHub Secrets
-        run: |
-          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-
-      - name: Push the local image to DockerHub
-        run: |
-          docker push csgrimberg/mssqlserver:latest
+    - name: Push the local image to DockerHub
+      run: |
+        docker push csgrimberg/mssqlserver:latest
