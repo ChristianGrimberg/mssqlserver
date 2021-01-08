@@ -1,0 +1,74 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build & Publish Container Image
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  github-packages:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Connect to GitHub Registry with Docker
+      - name: Docker login to GitHub Packages
+        # Uses the GitHub Secrets as Environments
+        env:
+          GH_REGISTRY_USER: ${{ secrets.GH_REGISTRY_USER }}
+          GH_REGISTRY_PASSWORD: ${{ secrets.GH_REGISTRY_PASSWORD }}
+        run: |
+          docker login https://docker.pkg.github.com -u $GH_REGISTRY_USER -p $GH_REGISTRY_PASSWORD
+
+      - name: Build to local image with Docker
+        run: |
+          docker build -t csgrimberg/mssqlserver:latest .
+      
+      - name: Push the local image to GitHub Packages
+        # Uses the GitHub Secrets as Environments
+        env:
+          GH_REGISTRY_USER: ${{ secrets.GH_REGISTRY_USER }}
+          GH_REGISTRY_PASSWORD: ${{ secrets.GH_REGISTRY_PASSWORD }}
+        run: |
+          docker push docker.pkg.github.com/christiangrimberg/mssqlserver/mssqlserver:latest
+
+  # This workflow contains a single job called "build"
+  dockerhub:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Connect to DockerHub with Docker
+      - name: Run a multi-line script
+        # Uses the GitHub Secrets as Environments
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}   
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      
+      - name: Build to local image with Docker
+        run: |
+          docker build -t csgrimberg/mssqlserver:latest .
+      
+      - name: docker push
+        run: |
+          docker push csgrimberg/mssqlserver:latest

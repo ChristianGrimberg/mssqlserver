@@ -4,6 +4,22 @@
 
 Image of Microsoft SQL Server with tools with latest updates from Microsoft repository. This popular database engine, runs under Linux Ubuntu release 18.04 LTS.
 
+## Pull this image directly from Docker Hub
+
+You can pull this image from my [Docker Hub](https://hub.docker.com/r/csgrimberg/mssqlserver) with this command:
+
+```bash
+docker pull csgrimberg/mssqlserver:latest
+```
+
+## Or pull this image directly from GitHub Packages
+
+You can pull this image from my [GitHub Packages](https://github.com/ChristianGrimberg?tab=packages) with this command:
+
+```bash
+docker pull docker.pkg.github.com/christiangrimberg/msssqlserver/mssqlserver:latest
+```
+
 ## Build the Docker container locally
 
 If you need, you can build this container after cloning this repo:
@@ -11,14 +27,6 @@ If you need, you can build this container after cloning this repo:
 ```bash
 git clone https://github.com/ChristianGrimberg/mssqlserver.git
 docker build -t csgrimberg/mssqlserver:latest mssqlserver/.
-```
-
-## Or pull this image directly from Docker Hub
-
-You can pull this image from my [Docker Hub](https://hub.docker.com/r/csgrimberg/mssqlserver) with this command:
-
-```bash
-docker pull csgrimberg/mssqlserver:latest
 ```
 
 ## Run the container
