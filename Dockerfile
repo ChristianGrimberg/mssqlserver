@@ -12,7 +12,7 @@ ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
 # Install system utilities
 RUN apt-get update \
     && apt-get install -y \
-    curl wget apt-utils apt-transport-https software-properties-common debconf-utils gnupg gnupg2 gnupg1
+    curl wget apt-utils apt-transport-https software-properties-common debconf-utils gnupg gnupg2 gnupg1 systemd
 
 # Import the public repository GPG keys
 RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
