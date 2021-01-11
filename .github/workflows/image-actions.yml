@@ -35,6 +35,7 @@ jobs:
 
     - name: Test connection to Database Engine
       run: docker exec mssqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P '$SA_PASSWORD' -Q 'SELECT @@VERSION'
+      continue-on-error: true
 
     - name: Connect to GitHub Packages with GitHub Secrets
       run: docker login https://docker.pkg.github.com -u $GH_REGISTRY_USER -p $GH_REGISTRY_PASSWORD

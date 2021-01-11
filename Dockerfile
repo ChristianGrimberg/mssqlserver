@@ -12,9 +12,6 @@ ENV TZ=America/Buenos_Aires
 ENV DEBIAN_FRONTEND noninteractive
 ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
 
-# Add the SQL Server default databases
-ADD databases/data.tar.gz /var/opt/mssql/
-
 # Install necessary locales
 RUN apt-get update \
     && apt-get install -y locales \
