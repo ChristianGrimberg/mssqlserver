@@ -24,7 +24,7 @@ jobs:
     - name: Build local image and Tag
       run: |
         docker build -t csgrimberg/mssqlserver:latest .
-        docker tag csgrimberg/mssqlserver:latest docker.pkg.github.com/christiangrimberg/mssqlserver/csgrimberg/mssqlserver:latest
+        docker tag csgrimberg/mssqlserver:latest docker.pkg.github.com/christiangrimberg/mssqlserver/mssqlserver:latest
 
 #    - name: Run the Container and waiting to start SQL Server Engine
 #      run: |
@@ -41,7 +41,7 @@ jobs:
 
     - name: Push the local image to GitHub Packages
       run: |
-        docker push docker.pkg.github.com/christiangrimberg/mssqlserver/csgrimberg/mssqlserver:latest
+        docker push docker.pkg.github.com/christiangrimberg/mssqlserver/mssqlserver:latest
 
     - name: Connect to DockerHub with GitHub Secrets
       run: |
