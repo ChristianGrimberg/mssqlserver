@@ -15,8 +15,8 @@ jobs:
       SA_PASSWORD: ${{ secrets.SA_PASSWORD }}
       GH_REGISTRY_USER: ${{ secrets.GH_REGISTRY_USER }}
       GH_REGISTRY_PASSWORD: ${{ secrets.GH_REGISTRY_PASSWORD }}
-      DOCKER_USER: ${{ secrets.DOCKER_USER }}   
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
+      DOCKER_USER: ${{ secrets.DOCKER_USER }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     
     steps:
     - uses: actions/checkout@v2
