@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Wait=80
+Wait=20
 i=0
 echo Waiting to starting SQL Server Engine...
 sleep 1.5
