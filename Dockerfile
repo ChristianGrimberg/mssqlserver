@@ -13,22 +13,17 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
 
 # Install necessary locales
-RUN apt-get update \
-    && apt-get install -y locales \
-    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
     && locale-gen
 
-# Delete update cached files
-RUN rm -rf /var/lib/apt/lists/*
+# Buenos Aires Time Zone
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone
 
 # Add Scripting tasks to container
 RUN mkdir /var/opt/mssql/scripts
 ADD scripts/start-sql-engine.sh /var/opt/mssql/scripts/
 RUN chmod +x /var/opt/mssql/scripts/start-sql-engine.sh
-
-# Buenos Aires Time Zone
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
-    && echo $TZ > /etc/timezone
 
 # Default SQL Server TCP/Port
 EXPOSE 1433
