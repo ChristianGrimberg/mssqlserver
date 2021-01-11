@@ -1,6 +1,6 @@
-# Microsoft SQL Server with tools
-
 ![Build & Publish Container Image](https://github.com/ChristianGrimberg/mssqlserver/workflows/Build%20&%20Publish%20Container%20Image/badge.svg?branch=main)
+
+# Microsoft SQL Server with tools
 
 Image of Microsoft SQL Server with tools with latest updates from Microsoft repository. This popular database engine, runs under Linux Ubuntu release 18.04 LTS.
 
@@ -34,7 +34,7 @@ docker build -t csgrimberg/mssqlserver:latest mssqlserver/.
 After that run the container with this command:
 
 ```bash
-docker run --rm -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=YourStrongPassword1234' -e 'MSSQL_PID=Express' -p 0.0.0.0:1433:1433 -v dbdata:/var/opt/mssql --name docker_mssqlserver -d csgrimberg/mssqlserver:latest
+docker run --rm -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=YourStrongPassword1234' -e 'MSSQL_PID=Express' -p 0.0.0.0:1433:1433 --name mssqlserver -d csgrimberg/mssqlserver:latest
 ```
 
 ## Run with Docker Compose
@@ -50,7 +50,15 @@ docker-compose up -d
 You can see the SQL Server instalation info running this command (replace with your password in _YourStrongPassword1234_ text in the next line):
 
 ```bash
-docker exec docker_mssqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'YourStrongPassword1234' -Q 'SELECT @@VERSION'
+docker exec mssqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'YourStrongPassword1234' -Q 'SELECT @@VERSION'
+```
+
+## See log file after start SQL Server engine
+
+You can view the SQL Server engine log file with this command:
+
+```bash
+docker exec mssqlserver /bin/bash -c /var/opt/mssql/scripts/start-sql-engine.sh
 ```
 
 > This container has configured with Buenos Aires time zone.
