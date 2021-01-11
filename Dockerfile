@@ -1,8 +1,11 @@
-# Ubuntu 18.04 Image
-FROM ubuntu:18.04
+# From a SQL Server 2019 image base
+FROM mcr.microsoft.com/mssql/server:2019-latest
+
+# Execute as Root User
+USER root
 
 # Label of the container
-LABEL maintainer="Microsoft SQL Server with Tools for Linux"
+LABEL maintainer="Microsoft SQL Server 2019 with Tools for Linux"
 
 # Set the image environments
 ENV TZ=America/Buenos_Aires
@@ -19,7 +22,7 @@ RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 
 # Register the Microsoft SQL Server 2019 with Tools for Ubuntu repository
 RUN add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/18.04/mssql-server-2019.list)"
-RUN curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list | tee /etc/apt/sources.list.d/prod1804.list
+#RUN curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list | tee /etc/apt/sources.list.d/prod1804.list
 
 # Install SQL Server Tools and drivers
 RUN apt-get update \
@@ -36,7 +39,7 @@ RUN apt-get install -y locales \
     && locale-gen
 
 # Install SQL Server Engine
-RUN apt-get install mssql-server -f -y
+#RUN apt-get install mssql-server -f -y
 
 # Delete update cached files
 RUN rm -rf /var/lib/apt/lists/*
