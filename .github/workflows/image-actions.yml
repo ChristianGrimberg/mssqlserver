@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-image-and-push:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest 
     env:
       SA_PASSWORD: ${{ secrets.SA_PASSWORD }}
       GH_REGISTRY_USER: ${{ secrets.GH_REGISTRY_USER }}
