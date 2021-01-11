@@ -1,4 +1,4 @@
-![Build & Publish Container Image](https://github.com/ChristianGrimberg/mssqlserver/workflows/Build%20&%20Publish%20Container%20Image/badge.svg?branch=main)
+![Build & Publish the SQL Server Engine image](https://github.com/ChristianGrimberg/mssqlserver/workflows/Build%20&%20Publish%20the%20SQL%20Server%20Engine%20image/badge.svg)
 
 # Microsoft SQL Server with tools
 
