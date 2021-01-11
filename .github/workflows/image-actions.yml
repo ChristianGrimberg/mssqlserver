@@ -29,7 +29,7 @@ jobs:
     - name: Run the Container and see log files
       run: |
         docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=$SA_PASSWORD' -e 'MSSQL_PID=Developer' -p 0.0.0.0:1433:1433 --name mssqlserver -d csgrimberg/mssqlserver:latest
-        sleep 8s
+        sleep 7s
         docker exec mssqlserver cat /var/opt/mssql/log/errorlog
       
     - name: Test connection to Database Engine
