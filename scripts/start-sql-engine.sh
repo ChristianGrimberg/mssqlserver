@@ -1,9 +1,11 @@
 #!/bin/bash
 
-Wait=10
+Wait=100
+i=0
 echo Waiting to $Wait seconds to starting SQL Server Engine...
-while sleep $Wait
+while [ $i -lt $Wait ];
 do
-    cat /var/opt/mssql/log/errorlog
-    break
+    tail -n 1 /var/opt/mssql/log/errorlog
+    let "i++"
+    sleep 0.1
 done
