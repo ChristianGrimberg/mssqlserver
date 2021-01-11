@@ -2,7 +2,9 @@
 
 # Microsoft SQL Server with tools
 
-Image of Microsoft SQL Server with tools with latest updates from Microsoft repository. This popular database engine, runs under Linux Ubuntu release 18.04 LTS.
+> This image has configured with Buenos Aires time zone.
+
+Image of Microsoft SQL Server with tools with latest updates from Microsoft repository.
 
 ## Pull this image directly from Docker Hub
 
@@ -60,5 +62,3 @@ You can view the SQL Server engine log file with this command:
 ```bash
 docker exec mssqlserver /bin/bash -c /var/opt/mssql/scripts/start-sql-engine.sh
 ```
-
-> This container has configured with Buenos Aires time zone.
