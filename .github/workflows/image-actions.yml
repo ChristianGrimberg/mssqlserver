@@ -42,9 +42,11 @@ jobs:
 
     - name: Push the local image to GitHub Packages
       run: docker push docker.pkg.github.com/christiangrimberg/mssqlserver/mssqlserver:latest
+      continue-on-error: true
 
     - name: Connect to DockerHub with GitHub Secrets
       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
     - name: Push the local image to DockerHub
       run: docker push csgrimberg/mssqlserver:latest
+      continue-on-error: true
