@@ -26,14 +26,14 @@ jobs:
         docker build -t csgrimberg/mssqlserver:latest .
         docker tag csgrimberg/mssqlserver:latest docker.pkg.github.com/christiangrimberg/mssqlserver/csgrimberg/mssqlserver:latest
 
-    - name: Run the Container and waiting to start SQL Server Engine
-      run: |
-        docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=$SA_PASSWORD' -e 'MSSQL_PID=Express' -p 0.0.0.0:1433:1433 --name mssqlserver -d csgrimberg/mssqlserver:latest
-        docker exec mssqlserver /bin/bash -c /var/opt/mssql/scripts/start-sql-engine.sh
-      
-    - name: Test connection to Database Engine
-      run: |
-        docker exec mssqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P '$SA_PASSWORD' -Q 'SELECT @@VERSION'
+#    - name: Run the Container and waiting to start SQL Server Engine
+#      run: |
+#        docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=$SA_PASSWORD' -e 'MSSQL_PID=Express' -p 0.0.0.0:1433:1433 --name mssqlserver -d csgrimberg/mssqlserver:latest
+#        docker exec mssqlserver /bin/bash -c /var/opt/mssql/scripts/start-sql-engine.sh
+#      
+#    - name: Test connection to Database Engine
+#      run: |
+#        docker exec mssqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P '$SA_PASSWORD' -Q 'SELECT @@VERSION'
       
     - name: Connect to GitHub Packages with GitHub Secrets
       run: |
