@@ -42,9 +42,9 @@ RUN apt-get install mssql-server -f -y
 RUN rm -rf /var/lib/apt/lists/*
 
 # Add Scripting tasks to container
-RUN mkdir /var/opt/mssql/data/scripts
-ADD scripts/start-sql-engine.sh /var/opt/mssql/data/scripts/
-RUN chmod +x /var/opt/mssql/data/scripts/start-sql-engine.sh
+RUN mkdir /var/opt/mssql/scripts
+ADD scripts/start-sql-engine.sh /var/opt/mssql/scripts/
+RUN chmod +x /var/opt/mssql/scripts/start-sql-engine.sh
 
 # Buenos Aires Time Zone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \

@@ -1,4 +1,4 @@
-name: Build & Publish Container Images
+name: Build & Publish the SQL Server Engine image
 
 on:
   push:
@@ -26,10 +26,10 @@ jobs:
         docker build -t csgrimberg/mssqlserver:latest .
         docker tag csgrimberg/mssqlserver:latest docker.pkg.github.com/christiangrimberg/mssqlserver/mssqlserver
 
-    - name: Run the Container waiting to start SQL Engine
+    - name: Run the Container and waiting to start SQL Engine
       run: |
         docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=$SA_PASSWORD' -e 'MSSQL_PID=Developer' -p 0.0.0.0:1433:1433 --name mssqlserver -d csgrimberg/mssqlserver:latest
-        docker exec mssqlserver /bin/bash -c /var/opt/mssql/data/scripts/start-sql-engine.sh
+        docker exec mssqlserver /bin/bash -c /var/opt/mssql/scripts/start-sql-engine.sh
       
     - name: Test connection to Database Engine
       run: |
