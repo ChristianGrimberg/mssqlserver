@@ -4,4 +4,5 @@ docker-compose.yml
 LICENSE
 README.md
 .vscode/*
+.github/*
 css/*
