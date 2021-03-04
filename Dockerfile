@@ -12,6 +12,15 @@ ENV TZ=America/Buenos_Aires
 ENV DEBIAN_FRONTEND noninteractive
 ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
 
+# Install .Net Core 5 SDK and Runtime
+RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
+    && dpkg -i packages-microsoft-prod.deb \
+    && apt-get update \
+    && apt-get install -y apt-transport-https dotnet-sdk-5.0 dotnet-runtime-5.0
+
+# Clear aptitude files
+RUN rm -rf /var/lib/apt/lists/*
+
 # Install necessary locales
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
     && locale-gen

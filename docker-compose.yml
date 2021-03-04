@@ -1,8 +1,10 @@
-version: "3"
+version: "3.4"
 
 services:
-  db:
+  mssqlserver:
     image: "csgrimberg/mssqlserver:latest"
+    build:
+      context: .
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=YourStrongPassword1234

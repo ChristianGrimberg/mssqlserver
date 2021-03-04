@@ -4,7 +4,7 @@
 
 > This image has configured with Buenos Aires time zone.
 
-Image of Microsoft SQL Server with tools with latest updates from Microsoft repository.
+Image of Microsoft SQL Server 2019 with tools with .Net Core 5 SDK and Runtime.
 
 ## Pull this image directly from Docker Hub
 
