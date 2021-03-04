@@ -1,6 +1,6 @@
 ![Build & Publish the SQL Server Engine image](https://github.com/ChristianGrimberg/mssqlserver/workflows/Build%20&%20Publish%20the%20SQL%20Server%20Engine%20image/badge.svg)
 
-# Microsoft SQL Server with tools
+# Microsoft SQL Server with tools and .Net Core SDK and Runtime
 
 > This image has configured with Buenos Aires time zone.
 
