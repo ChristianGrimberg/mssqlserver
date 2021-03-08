@@ -18,6 +18,9 @@ RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod
     && apt-get update \
     && apt-get install -y apt-transport-https dotnet-sdk-5.0 dotnet-runtime-5.0
 
+# Add support to .Net Entity Framework Core
+RUN dotnet tool install --global dotnet-ef
+
 # Clear aptitude files
 RUN rm -rf /var/lib/apt/lists/*
 
